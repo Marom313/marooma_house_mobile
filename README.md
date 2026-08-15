@@ -1,22 +1,17 @@
-# Business_App
+# business_app
 
-Production-ready Flutter starter for a boutique accommodation app.
+A new Flutter project.
 
-Next steps
-- Install Flutter SDK and ensure `flutter` is on PATH.
-- Run:
+## Getting Started
 
-```bash
-flutter pub get
-flutter analyze
-flutter run
-```
+This project is a starting point for a Flutter application.
 
-GitHub & CI
-- I will scaffold the repo locally. To push to GitHub: create a repo named `Business_App` and push the local repo. Alternatively provide a PAT and I can help automate remote creation.
+A few resources to get you started if this is your first Flutter project:
 
-Firebase
-- I will scaffold Firebase initialization calls; please create a Firebase project or allow me to create one. Do not enable billing unless explicitly approved.
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
 
-Secrets
-- Keep service account keys and API keys out of source control. Use GitHub Secrets for CI.
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

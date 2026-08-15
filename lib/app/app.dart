@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import '../core/theme/app_theme.dart';
+import 'package:provider/provider.dart';
+
 import '../app/di.dart';
+import '../core/theme/app_theme.dart';
 import '../features/authentication/view_models/auth_view_model.dart';
 import '../features/authentication/views/splash_view.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthViewModel>(create: (_) => getIt<AuthViewModel>()),
+        ChangeNotifierProvider<AuthViewModel>(
+          create: (_) => getIt<AuthViewModel>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Business App',
@@ -24,7 +27,7 @@ class App extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('en'), Locale('he'), Locale('ru')],
+        supportedLocales: [Locale('en'), Locale('he'), Locale('ru')],
         home: const SplashView(),
       ),
     );

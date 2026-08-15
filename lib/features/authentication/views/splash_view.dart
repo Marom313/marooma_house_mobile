@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../view_models/auth_view_model.dart';
 
 class SplashView extends StatefulWidget {
-  const SplashView({Key? key}) : super(key: key);
+  const SplashView({super.key});
 
   @override
   State<SplashView> createState() => _SplashViewState();
