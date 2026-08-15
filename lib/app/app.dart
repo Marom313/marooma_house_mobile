@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 
 import '../app/di.dart';
 import '../core/theme/app_theme.dart';
+import '../features/authentication/services/firebase_auth_service.dart';
 import '../features/authentication/view_models/auth_view_model.dart';
 import '../features/authentication/views/splash_view.dart';
+import '../features/booking/view_models/booking_view_model.dart';
+import '../features/invites/view_models/invite_view_model.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +18,20 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthViewModel>(
-          create: (_) => getIt<AuthViewModel>(),
+          create: (_) {
+            if (getIt.isRegistered<AuthViewModel>()) {
+              return getIt<AuthViewModel>();
+            }
+            return AuthViewModel(
+              authService: FirebaseAuthService(),
+            );
+          },
+        ),
+        ChangeNotifierProvider<BookingViewModel>(
+          create: (_) => getIt<BookingViewModel>(),
+        ),
+        ChangeNotifierProvider<InviteViewModel>(
+          create: (_) => getIt<InviteViewModel>(),
         ),
       ],
       child: MaterialApp(

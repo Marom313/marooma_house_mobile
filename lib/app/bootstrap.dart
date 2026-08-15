@@ -7,9 +7,15 @@ import 'di.dart';
 class AppBootstrap {
   static Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    await setupDi();
+
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      await setupDi();
+    } catch (error) {
+      debugPrint('AppBootstrap initialization failed: $error');
+      rethrow;
+    }
   }
 }

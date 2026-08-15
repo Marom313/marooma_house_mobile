@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../app/di.dart';
+import '../../home/views/home_view.dart';
 import '../view_models/auth_view_model.dart';
 
 class SplashView extends StatefulWidget {
@@ -14,6 +17,9 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!getIt.isRegistered<AuthViewModel>()) {
+        return;
+      }
       final vm = Provider.of<AuthViewModel>(context, listen: false);
       vm.checkSession();
     });
@@ -21,8 +27,6 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('Business App — Loading...')),
-    );
+    return const HomeView();
   }
 }
