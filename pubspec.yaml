@@ -1,0 +1,31 @@
+name: business_app
+description: A production-quality boutique accommodation Flutter application.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
+  get_it: ^7.2.0
+  flutter_secure_storage: ^8.0.0
+  firebase_core: ^2.10.0
+  firebase_auth: ^4.5.0
+  cloud_firestore: ^4.7.0
+  firebase_storage: ^11.0.0
+  intl: ^0.18.0
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/

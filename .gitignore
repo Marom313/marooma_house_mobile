@@ -1,0 +1,26 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+/.gradle
+/android/.gradle
+/android/app/debug.keystore
+ios/Pods/
+**/GeneratedPluginRegistrant.*
+pubspec.lock
+
+# VSCode
+.vscode/
+
+# Mac
+.DS_Store
+
+# Firebase service accounts and env
+*.json
+.env
+
+# IntelliJ
+.idea/
+
+# build
+/build
