@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../models/invitation.dart';
+import '../invites_model/invitation.dart';
 import '../services/invite_service.dart';
 
 class InviteViewModel extends ChangeNotifier {
@@ -12,7 +12,7 @@ class InviteViewModel extends ChangeNotifier {
   String? _error;
   String? _lastGeneratedCode;
 
-  InviteViewModel({required InviteService inviteService}) : _inviteService = inviteService;
+  InviteViewModel({required this._inviteService});
 
   List<Invitation> get sentInvitations => _sentInvitations;
   List<Invitation> get activeInvitations => _activeInvitations;

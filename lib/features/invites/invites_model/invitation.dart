@@ -33,8 +33,9 @@ class Invitation {
       referralCode: json['referralCode'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       status: json['status'] as String,
-      acceptedAt:
-          json['acceptedAt'] != null ? DateTime.parse(json['acceptedAt'] as String) : null,
+      acceptedAt: json['acceptedAt'] != null
+          ? DateTime.parse(json['acceptedAt'] as String)
+          : null,
       referralReward: json['referralReward'] as int,
     );
   }

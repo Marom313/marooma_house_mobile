@@ -11,7 +11,9 @@ class AppTheme {
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.background,
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(secondary: AppColors.accent),
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.blue,
+    ).copyWith(secondary: AppColors.accent),
   );
 
   static final ThemeData darkTheme = ThemeData(

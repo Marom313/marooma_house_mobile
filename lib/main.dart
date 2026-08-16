@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.dart';
 import 'app/bootstrap.dart';
+import 'app/locale_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     await AppBootstrap.initialize();
-    runApp(const App());
+    final preferences = await SharedPreferences.getInstance();
+    runApp(App(localeController: LocaleController(preferences)));
   } catch (error) {
     runApp(
       MaterialApp(
         home: Scaffold(
-          body: Center(
-            child: Text('Initialization error: $error'),
-          ),
+          body: Center(child: Text('Initialization error: $error')),
         ),
       ),
     );

@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../features/booking/views/booking_view.dart';
-import '../../../features/invites/views/invite_view.dart';
+import '../../../app/locale_controller.dart';
+import '../../../features/booking/booking_view/booking_view.dart';
+import '../../../features/invites/invites_view/invite_view.dart';
+import '../../../l10n/app_localizations.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
     return Scaffold(
+      drawer: const _HomeDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(
-              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-            ),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Color.fromRGBO(7, 24, 31, 0.42),
-              BlendMode.darken,
-            ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF163D3E), Color(0xFF102B2F)],
           ),
         ),
         child: SafeArea(
@@ -32,28 +32,28 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: 26),
                 _HeroCard(),
                 const SizedBox(height: 24),
-                _SectionTitle(title: 'People loving it'),
+                _SectionTitle(title: strings.peopleLovingIt),
                 const SizedBox(height: 14),
                 SizedBox(
                   height: 220,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: const [
+                    children: [
                       _ExperienceTile(
-                        title: 'Sunset brunch',
-                        subtitle: 'Friends · 4 guests',
+                        title: strings.sunsetBrunch,
+                        subtitle: strings.friendsGuests,
                         imageUrl:
                             'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
                       ),
                       _ExperienceTile(
-                        title: 'Poolside laughs',
-                        subtitle: 'Couples · 2 guests',
+                        title: strings.poolsideLaughs,
+                        subtitle: strings.couplesGuests,
                         imageUrl:
                             'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80',
                       ),
                       _ExperienceTile(
-                        title: 'Beach dinners',
-                        subtitle: 'Families · 6 guests',
+                        title: strings.beachDinners,
+                        subtitle: strings.familiesGuests,
                         imageUrl:
                             'https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80',
                       ),
@@ -61,20 +61,20 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 26),
-                _SectionTitle(title: 'Featured escapes'),
+                _SectionTitle(title: strings.featuredEscapes),
                 const SizedBox(height: 14),
-                const _StayCard(
-                  title: 'Harbor Loft',
-                  subtitle: 'Ocean-view suite · 2 guests',
-                  price: 'AED 620 / night',
+                _StayCard(
+                  title: strings.harborLoft,
+                  subtitle: strings.oceanSuiteGuests,
+                  price: strings.nightPrice('620'),
                   imageUrl:
                       'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
                 ),
                 const SizedBox(height: 14),
-                const _StayCard(
-                  title: 'Courtyard Casa',
-                  subtitle: 'Garden retreat · 4 guests',
-                  price: 'AED 840 / night',
+                _StayCard(
+                  title: strings.courtyardCasa,
+                  subtitle: strings.gardenRetreatGuests,
+                  price: strings.nightPrice('840'),
                   imageUrl:
                       'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
                 ),
@@ -90,6 +90,7 @@ class HomeView extends StatelessWidget {
 class _TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
     return Row(
       children: [
         Container(
@@ -108,9 +109,9 @@ class _TopBar extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'Harbor & Haven',
+                strings.appName,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -118,11 +119,8 @@ class _TopBar extends StatelessWidget {
                 ),
               ),
               Text(
-                'Boutique stays for effortless escapes',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 12,
-                ),
+                strings.tagline,
+                style: TextStyle(color: Colors.white70, fontSize: 12),
               ),
             ],
           ),
@@ -134,9 +132,180 @@ class _TopBar extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(14),
           ),
-          child: const Icon(Icons.menu_rounded, color: Colors.white),
+          child: IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: const Icon(Icons.menu_rounded, color: Colors.white),
+            tooltip: strings.openMenu,
+            padding: EdgeInsets.zero,
+          ),
         ),
       ],
+    );
+  }
+}
+
+class _HomeDrawer extends StatelessWidget {
+  const _HomeDrawer();
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
+    final localeController = context.watch<LocaleController>();
+    return Drawer(
+      backgroundColor: const Color(0xFF0F2A2B),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: const Center(
+                      child: Text('🌊', style: TextStyle(fontSize: 22)),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      strings.appName,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              const Divider(color: Colors.white24),
+              const SizedBox(height: 12),
+              ListTile(
+                leading: const Icon(Icons.home_rounded, color: Colors.white),
+                title: Text(
+                  strings.home,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.calendar_month_rounded,
+                  color: Color(0xFFE8B45F),
+                ),
+                title: Text(
+                  strings.bookStay,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const BookingView()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.group_add_rounded,
+                  color: Color(0xFFE8B45F),
+                ),
+                title: Text(
+                  strings.inviteFriends,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(
+                    context,
+                  ).push(MaterialPageRoute(builder: (_) => const InviteView()));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.explore_rounded, color: Colors.white),
+                title: Text(
+                  strings.exploreStays,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.language_rounded,
+                  color: Color(0xFFE8B45F),
+                ),
+                title: Text(
+                  strings.language,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                trailing: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: localeController.locale?.languageCode ?? 'system',
+                    dropdownColor: const Color(0xFF163D3E),
+                    style: const TextStyle(color: Colors.white),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'system',
+                        child: Text(strings.systemLanguage),
+                      ),
+                      const DropdownMenuItem(
+                        value: 'en',
+                        child: Text('English'),
+                      ),
+                      const DropdownMenuItem(value: 'he', child: Text('עברית')),
+                      const DropdownMenuItem(
+                        value: 'ru',
+                        child: Text('Русский'),
+                      ),
+                    ],
+                    onChanged: (code) => localeController.setLocale(
+                      code == null || code == 'system' ? null : Locale(code),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      strings.signatureSeasons,
+                      style: TextStyle(
+                        color: Color(0xFFFFD58A),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      strings.signatureBody,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -144,6 +313,7 @@ class _TopBar extends StatelessWidget {
 class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -161,8 +331,8 @@ class _HeroCard extends StatelessWidget {
               color: const Color(0xFFE8B45F).withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(999),
             ),
-            child: const Text(
-              'Curated coastal living',
+            child: Text(
+              strings.curatedLiving,
               style: TextStyle(
                 color: Color(0xFFFFE5B3),
                 fontSize: 12,
@@ -171,8 +341,8 @@ class _HeroCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Stay beautifully. Feel restored.',
+          Text(
+            strings.heroTitle,
             style: TextStyle(
               color: Colors.white,
               fontSize: 34,
@@ -181,13 +351,9 @@ class _HeroCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Sun-kissed suites, local experiences, and slower luxury for the way you actually travel.',
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 15,
-              height: 1.5,
-            ),
+          Text(
+            strings.heroBody,
+            style: TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
           ),
           const SizedBox(height: 20),
           Wrap(
@@ -195,32 +361,38 @@ class _HeroCard extends StatelessWidget {
             runSpacing: 12,
             children: [
               ElevatedButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const BookingView()),
-                ),
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const BookingView())),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFE8B45F),
                   foregroundColor: const Color(0xFF1B2D2A),
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 16,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text('Book a stay'),
+                child: Text(strings.bookStay),
               ),
               OutlinedButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const InviteView()),
-                ),
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const InviteView())),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
                   side: const BorderSide(color: Colors.white54),
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 16,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text('Invite friends'),
+                child: Text(strings.inviteFriends),
               ),
             ],
           ),
@@ -276,6 +448,8 @@ class _ExperienceTile extends StatelessWidget {
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
               ),
             ),
             Positioned.fill(
@@ -310,10 +484,7 @@ class _ExperienceTile extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: Colors.white70, fontSize: 12),
                   ),
                 ],
               ),
@@ -357,6 +528,8 @@ class _StayCard extends StatelessWidget {
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
               ),
             ),
           ),
@@ -376,10 +549,7 @@ class _StayCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 13,
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
                 ),
                 const SizedBox(height: 10),
                 Text(
@@ -395,7 +565,10 @@ class _StayCard extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+            icon: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

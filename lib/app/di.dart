@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
 import '../features/authentication/services/firebase_auth_service.dart';
-import '../features/authentication/view_models/auth_view_model.dart';
+import '../features/authentication/authentication_view_model/auth_view_model.dart';
 import '../features/booking/services/booking_service.dart';
-import '../features/booking/view_models/booking_view_model.dart';
+import '../features/booking/booking_view_model/booking_view_model.dart';
 import '../features/invites/services/invite_service.dart';
-import '../features/invites/view_models/invite_view_model.dart';
+import '../features/invites/invites_view_model/invite_view_model.dart';
 
 final GetIt getIt = GetIt.instance;
 

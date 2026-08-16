@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import '../models/booking.dart';
-import '../models/suite.dart';
+import '../booking_model/booking.dart';
+import '../booking_model/suite.dart';
 import '../services/booking_service.dart';
 
 class BookingViewModel extends ChangeNotifier {
@@ -12,7 +12,7 @@ class BookingViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
 
-  BookingViewModel({required BookingService bookingService}) : _bookingService = bookingService;
+  BookingViewModel({required this._bookingService});
 
   List<Suite> get availableSuites => _availableSuites;
   Suite? get selectedSuite => _selectedSuite;
