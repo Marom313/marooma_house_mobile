@@ -586,41 +586,26 @@ class _RoomsGallery extends StatelessWidget {
     final rooms = _roomData(strings);
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 700) {
-          return SizedBox(
-            height: 300,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: rooms.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 12),
-              itemBuilder: (context, index) {
-                final room = rooms[index];
-                return _StayCard(
-                  title: room.title,
-                  subtitle: room.subtitle,
-                  price: room.price,
-                  imageUrl: room.imageUrl,
-                );
-              },
-            ),
-          );
-        }
-
-        return Wrap(
-          spacing: 14,
-          runSpacing: 14,
-          children: [
-            for (final room in rooms)
-              SizedBox(
-                height: 300,
+        final cardWidth = constraints.maxWidth < 700 ? 286.0 : 320.0;
+        return SizedBox(
+          height: 300,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: rooms.length,
+            separatorBuilder: (_, _) => const SizedBox(width: 14),
+            itemBuilder: (context, index) {
+              final room = rooms[index];
+              return SizedBox(
+                width: cardWidth,
                 child: _StayCard(
                   title: room.title,
                   subtitle: room.subtitle,
                   price: room.price,
                   imageUrl: room.imageUrl,
                 ),
-              ),
-          ],
+              );
+            },
+          ),
         );
       },
     );
