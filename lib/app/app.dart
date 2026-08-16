@@ -10,17 +10,24 @@ import '../features/booking/booking_view_model/booking_view_model.dart';
 import '../features/invites/invites_view_model/invite_view_model.dart';
 import '../l10n/app_localizations.dart';
 import 'locale_controller.dart';
+import 'theme_controller.dart';
 
 class App extends StatelessWidget {
-  const App({required this.localeController, super.key});
+  const App({
+    required this.localeController,
+    required this.themeController,
+    super.key,
+  });
 
   final LocaleController localeController;
+  final ThemeController themeController;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: localeController),
+        ChangeNotifierProvider.value(value: themeController),
         ChangeNotifierProvider<AuthViewModel>(
           create: (_) {
             if (getIt.isRegistered<AuthViewModel>()) {
@@ -36,11 +43,12 @@ class App extends StatelessWidget {
           create: (_) => getIt<InviteViewModel>(),
         ),
       ],
-      child: Consumer<LocaleController>(
-        builder: (context, localeController, _) => MaterialApp(
+      child: Consumer2<LocaleController, ThemeController>(
+        builder: (context, localeController, themeController, _) => MaterialApp(
           onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
+          themeMode: themeController.themeMode,
           locale: localeController.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

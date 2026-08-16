@@ -33,6 +33,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get accountSettings => 'Настройки аккаунта';
 
   @override
+  String get appearance => 'Оформление';
+
+  @override
+  String get systemTheme => 'Система';
+
+  @override
+  String get lightTheme => 'Светлая';
+
+  @override
+  String get darkTheme => 'Тёмная';
+
+  @override
   String get language => 'Язык';
 
   @override
@@ -69,6 +81,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get featuredEscapes => 'Избранные варианты';
+
+  @override
+  String get roomsIntro =>
+      'Шесть разных вариантов: от светлых бутик-номеров до панорамных люксов на холме.';
+
+  @override
+  String get houseAmenities => 'Всё для лёгкого отдыха';
+
+  @override
+  String get houseAmenitiesBody =>
+      'Свежий завтрак, частный бассейн, быстрый Wi-Fi, местные рекомендации и команда рядом, когда она нужна.';
+
+  @override
+  String get ourStory => 'Более спокойное гостеприимство';
+
+  @override
+  String get ourStoryBody =>
+      'Marooma House создан вокруг света, тишины и настоящей связи с побережьем. У каждого номера свой характер и одинаково внимательный сервис.';
+
+  @override
+  String get planYourStay => 'Готовы к побережью?';
+
+  @override
+  String get planYourStayBody =>
+      'Выберите номер и даты, а мы позаботимся об остальном.';
 
   @override
   String get sunsetBrunch => 'Бранч на закате';

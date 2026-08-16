@@ -33,6 +33,18 @@ class AppLocalizationsHe extends AppLocalizations {
   String get accountSettings => 'הגדרות חשבון';
 
   @override
+  String get appearance => 'תצוגה';
+
+  @override
+  String get systemTheme => 'מערכת';
+
+  @override
+  String get lightTheme => 'בהיר';
+
+  @override
+  String get darkTheme => 'כהה';
+
+  @override
   String get language => 'שפה';
 
   @override
@@ -69,6 +81,30 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get featuredEscapes => 'אירוחים נבחרים';
+
+  @override
+  String get roomsIntro =>
+      'שישה אירוחים שונים, מחדרי בוטיק מוארים ועד סוויטות פנורמיות על הגבעה.';
+
+  @override
+  String get houseAmenities => 'כל מה שצריך לשהייה קלה';
+
+  @override
+  String get houseAmenitiesBody =>
+      'ארוחת בוקר טרייה, בריכה פרטית, אינטרנט מהיר, המלצות מקומיות וצוות קרוב כשצריך אותנו.';
+
+  @override
+  String get ourStory => 'אירוח בקצב רגוע יותר';
+
+  @override
+  String get ourStoryBody =>
+      'בית מרומה תוכנן סביב אור, שלווה וחיבור אמיתי לחוף. לכל חדר אופי משלו, עם אותה רמת שירות קשובה.';
+
+  @override
+  String get planYourStay => 'מוכנים לחוף?';
+
+  @override
+  String get planYourStayBody => 'בחרו חדר ותאריכים, ואנחנו נדאג לכל הפרטים.';
 
   @override
   String get sunsetBrunch => 'בראנץ׳ בשקיעה';

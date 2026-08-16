@@ -1,4 +1,5 @@
 import 'package:marooma_house_mobile/app/locale_controller.dart';
+import 'package:marooma_house_mobile/app/theme_controller.dart';
 import 'package:marooma_house_mobile/features/booking/booking_view/booking_view.dart';
 import 'package:marooma_house_mobile/features/home/home_view/home_view.dart';
 import 'package:marooma_house_mobile/features/invites/invites_view/invite_view.dart';
@@ -17,8 +18,11 @@ Future<void> pumpLocalized(
   final preferences = await SharedPreferences.getInstance();
 
   await tester.pumpWidget(
-    ChangeNotifierProvider(
-      create: (_) => LocaleController(preferences),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleController(preferences)),
+        ChangeNotifierProvider(create: (_) => ThemeController(preferences)),
+      ],
       child: MaterialApp(
         locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -36,6 +40,37 @@ void main() {
 
     expect(find.text('Marooma House'), findsWidgets);
     expect(find.text('Boutique stays for effortless escapes'), findsOneWidget);
+    await tester.ensureVisible(find.text('Rooms and suites'));
+    await tester.pumpAndSettle();
+    expect(find.text('The Pearl Suite'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView).at(1), const Offset(-900, 0));
+    await tester.pumpAndSettle();
+
+    expect(find.text('The Lighthouse Suite'), findsOneWidget);
+    expect(find.text('Garden Room'), findsOneWidget);
+    expect(find.text('Family Room'), findsOneWidget);
+  });
+
+  testWidgets('right menu exposes account settings and preferences', (
+    tester,
+  ) async {
+    await pumpLocalized(tester, const HomeView());
+
+    final scaffold = tester.state<ScaffoldState>(find.byType(Scaffold).first);
+    scaffold.openEndDrawer();
+    await tester.pumpAndSettle();
+
+    expect(scaffold.isEndDrawerOpen, isTrue);
+    expect(find.text('Account settings'), findsOneWidget);
+
+    await tester.tap(find.text('Account settings'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('Appearance'), findsOneWidget);
+    expect(find.text('Light'), findsOneWidget);
+    expect(find.text('Dark'), findsOneWidget);
   });
 
   testWidgets('booking view shows localized suite selection and pricing', (

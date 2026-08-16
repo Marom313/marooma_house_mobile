@@ -148,6 +148,30 @@ abstract class AppLocalizations {
   /// **'Account settings'**
   String get accountSettings;
 
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @systemTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemTheme;
+
+  /// No description provided for @lightTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightTheme;
+
+  /// No description provided for @darkTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkTheme;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
@@ -219,6 +243,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Featured escapes'**
   String get featuredEscapes;
+
+  /// No description provided for @roomsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Six distinct stays, from bright boutique rooms to panoramic hilltop suites.'**
+  String get roomsIntro;
+
+  /// No description provided for @houseAmenities.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything for an easy stay'**
+  String get houseAmenities;
+
+  /// No description provided for @houseAmenitiesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast made fresh, a private pool, fast Wi-Fi, thoughtful local recommendations, and a team nearby when you need us.'**
+  String get houseAmenitiesBody;
+
+  /// No description provided for @ourStory.
+  ///
+  /// In en, this message translates to:
+  /// **'A slower kind of hospitality'**
+  String get ourStory;
+
+  /// No description provided for @ourStoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Marooma House is designed around light, calm, and genuine connection to the coast. Every room has its own character while sharing the same attentive service.'**
+  String get ourStoryBody;
+
+  /// No description provided for @planYourStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for the coast?'**
+  String get planYourStay;
+
+  /// No description provided for @planYourStayBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your room, select your dates, and let us take care of the details.'**
+  String get planYourStayBody;
 
   /// No description provided for @sunsetBrunch.
   ///

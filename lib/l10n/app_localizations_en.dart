@@ -33,6 +33,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountSettings => 'Account settings';
 
   @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get systemTheme => 'System';
+
+  @override
+  String get lightTheme => 'Light';
+
+  @override
+  String get darkTheme => 'Dark';
+
+  @override
   String get language => 'Language';
 
   @override
@@ -69,6 +81,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featuredEscapes => 'Featured escapes';
+
+  @override
+  String get roomsIntro =>
+      'Six distinct stays, from bright boutique rooms to panoramic hilltop suites.';
+
+  @override
+  String get houseAmenities => 'Everything for an easy stay';
+
+  @override
+  String get houseAmenitiesBody =>
+      'Breakfast made fresh, a private pool, fast Wi-Fi, thoughtful local recommendations, and a team nearby when you need us.';
+
+  @override
+  String get ourStory => 'A slower kind of hospitality';
+
+  @override
+  String get ourStoryBody =>
+      'Marooma House is designed around light, calm, and genuine connection to the coast. Every room has its own character while sharing the same attentive service.';
+
+  @override
+  String get planYourStay => 'Ready for the coast?';
+
+  @override
+  String get planYourStayBody =>
+      'Choose your room, select your dates, and let us take care of the details.';
 
   @override
   String get sunsetBrunch => 'Sunset brunch';

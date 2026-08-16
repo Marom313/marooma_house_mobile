@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../app/locale_controller.dart';
 import '../../../features/booking/booking_view/booking_view.dart';
 import '../../../features/invites/invites_view/invite_view.dart';
+import '../../../features/settings/settings_view/account_settings_view.dart';
 import '../../../l10n/app_localizations.dart';
 
 class HomeView extends StatelessWidget {
@@ -13,7 +11,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context)!;
     return Scaffold(
-      drawer: const _HomeDrawer(),
+      endDrawer: const _HomeDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -24,61 +22,83 @@ class HomeView extends StatelessWidget {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _TopBar(),
-                const SizedBox(height: 26),
-                _HeroCard(),
-                const SizedBox(height: 24),
-                _SectionTitle(title: strings.peopleLovingIt),
-                const SizedBox(height: 14),
-                SizedBox(
-                  height: 220,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1080),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 36),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _ExperienceTile(
-                        title: strings.sunsetBrunch,
-                        subtitle: strings.friendsGuests,
-                        imageUrl:
-                            'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
+                      _TopBar(),
+                      const SizedBox(height: 26),
+                      _HeroCard(),
+                      const SizedBox(height: 24),
+                      _SectionTitle(title: strings.peopleLovingIt),
+                      const SizedBox(height: 14),
+                      SizedBox(
+                        height: 220,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            _ExperienceTile(
+                              title: strings.sunsetBrunch,
+                              subtitle: strings.friendsGuests,
+                              imageUrl:
+                                  'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
+                            ),
+                            _ExperienceTile(
+                              title: strings.poolsideLaughs,
+                              subtitle: strings.couplesGuests,
+                              imageUrl:
+                                  'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80',
+                            ),
+                            _ExperienceTile(
+                              title: strings.beachDinners,
+                              subtitle: strings.familiesGuests,
+                              imageUrl:
+                                  'https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80',
+                            ),
+                          ],
+                        ),
                       ),
-                      _ExperienceTile(
-                        title: strings.poolsideLaughs,
-                        subtitle: strings.couplesGuests,
-                        imageUrl:
-                            'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80',
+                      const SizedBox(height: 26),
+                      _SectionTitle(title: strings.availableSuites),
+                      const SizedBox(height: 6),
+                      Text(
+                        strings.roomsIntro,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                          height: 1.45,
+                        ),
                       ),
-                      _ExperienceTile(
-                        title: strings.beachDinners,
-                        subtitle: strings.familiesGuests,
-                        imageUrl:
-                            'https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80',
+                      const SizedBox(height: 14),
+                      SizedBox(
+                        height: 300,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: _roomCards(strings),
+                        ),
                       ),
+                      const SizedBox(height: 30),
+                      _InfoBand(
+                        icon: Icons.pool_rounded,
+                        title: strings.houseAmenities,
+                        body: strings.houseAmenitiesBody,
+                      ),
+                      const SizedBox(height: 16),
+                      _InfoBand(
+                        icon: Icons.wb_sunny_rounded,
+                        title: strings.ourStory,
+                        body: strings.ourStoryBody,
+                      ),
+                      const SizedBox(height: 30),
+                      _ClosingSection(),
                     ],
                   ),
                 ),
-                const SizedBox(height: 26),
-                _SectionTitle(title: strings.featuredEscapes),
-                const SizedBox(height: 14),
-                _StayCard(
-                  title: strings.harborLoft,
-                  subtitle: strings.oceanSuiteGuests,
-                  price: strings.nightPrice('620'),
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
-                ),
-                const SizedBox(height: 14),
-                _StayCard(
-                  title: strings.courtyardCasa,
-                  subtitle: strings.gardenRetreatGuests,
-                  price: strings.nightPrice('840'),
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -133,7 +153,7 @@ class _TopBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
           ),
           child: IconButton(
-            onPressed: () => Scaffold.of(context).openDrawer(),
+            onPressed: () => Scaffold.of(context).openEndDrawer(),
             icon: const Icon(Icons.menu_rounded, color: Colors.white),
             tooltip: strings.openMenu,
             padding: EdgeInsets.zero,
@@ -150,7 +170,6 @@ class _HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context)!;
-    final localeController = context.watch<LocaleController>();
     return Drawer(
       backgroundColor: const Color(0xFF0F2A2B),
       child: SafeArea(
@@ -198,11 +217,11 @@ class _HomeDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(
-                  Icons.calendar_month_rounded,
+                  Icons.bed_rounded,
                   color: Color(0xFFE8B45F),
                 ),
                 title: Text(
-                  strings.bookStay,
+                  strings.availableSuites,
                   style: const TextStyle(color: Colors.white),
                 ),
                 onTap: () {
@@ -227,49 +246,6 @@ class _HomeDrawer extends StatelessWidget {
                     context,
                   ).push(MaterialPageRoute(builder: (_) => const InviteView()));
                 },
-              ),
-              ListTile(
-                leading: const Icon(Icons.explore_rounded, color: Colors.white),
-                title: Text(
-                  strings.exploreStays,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.language_rounded,
-                  color: Color(0xFFE8B45F),
-                ),
-                title: Text(
-                  strings.language,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                trailing: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: localeController.locale?.languageCode ?? 'system',
-                    dropdownColor: const Color(0xFF163D3E),
-                    style: const TextStyle(color: Colors.white),
-                    items: [
-                      DropdownMenuItem(
-                        value: 'system',
-                        child: Text(strings.systemLanguage),
-                      ),
-                      const DropdownMenuItem(
-                        value: 'en',
-                        child: Text('English'),
-                      ),
-                      const DropdownMenuItem(value: 'he', child: Text('עברית')),
-                      const DropdownMenuItem(
-                        value: 'ru',
-                        child: Text('Русский'),
-                      ),
-                    ],
-                    onChanged: (code) => localeController.setLocale(
-                      code == null || code == 'system' ? null : Locale(code),
-                    ),
-                  ),
-                ),
               ),
               const Spacer(),
               Container(
@@ -301,6 +277,29 @@ class _HomeDrawer extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                leading: const Icon(
+                  Icons.manage_accounts_rounded,
+                  color: Color(0xFFE8B45F),
+                ),
+                title: Text(
+                  strings.accountSettings,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                trailing: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.white54,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AccountSettingsView(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -496,6 +495,51 @@ class _ExperienceTile extends StatelessWidget {
   }
 }
 
+List<Widget> _roomCards(AppLocalizations strings) => [
+  _StayCard(
+    title: strings.harborLoft,
+    subtitle: strings.oceanSuiteGuests,
+    price: strings.nightPrice('620'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
+  ),
+  _StayCard(
+    title: strings.courtyardCasa,
+    subtitle: strings.gardenRetreatGuests,
+    price: strings.nightPrice('840'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
+  ),
+  _StayCard(
+    title: strings.pearlSuite,
+    subtitle: strings.pearlSuiteSubtitle,
+    price: strings.nightPrice('710'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=85',
+  ),
+  _StayCard(
+    title: strings.lighthouseSuite,
+    subtitle: strings.lighthouseSuiteSubtitle,
+    price: strings.nightPrice('960'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85',
+  ),
+  _StayCard(
+    title: strings.gardenRoom,
+    subtitle: strings.gardenRoomSubtitle,
+    price: strings.nightPrice('390'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85',
+  ),
+  _StayCard(
+    title: strings.familyRoom,
+    subtitle: strings.familyRoomSubtitle,
+    price: strings.nightPrice('760'),
+    imageUrl:
+        'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=85',
+  ),
+];
+
 class _StayCard extends StatelessWidget {
   const _StayCard({
     required this.title,
@@ -512,19 +556,21 @@ class _StayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      width: 252,
+      margin: const EdgeInsetsDirectional.only(end: 12),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
             child: SizedBox(
-              width: 110,
-              height: 110,
+              width: double.infinity,
+              height: 150,
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
@@ -533,45 +579,158 @@ class _StayCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 14),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  price,
-                  style: const TextStyle(
-                    color: Color(0xFFFFD58A),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
+                  const SizedBox(height: 5),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white70, fontSize: 12),
                   ),
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
+                  const Spacer(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          price,
+                          style: const TextStyle(
+                            color: Color(0xFFFFD58A),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const BookingView(),
+                          ),
+                        ),
+                        tooltip: AppLocalizations.of(context)!.bookStay,
+                        icon: const Icon(
+                          Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _InfoBand extends StatelessWidget {
+  const _InfoBand({
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(22),
+    decoration: BoxDecoration(
+      color: Colors.white.withValues(alpha: 0.1),
+      border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: const Color(0xFFE8B45F), size: 28),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                body,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13,
+                  height: 1.55,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+class _ClosingSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          strings.planYourStay,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          strings.planYourStayBody,
+          style: const TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: 18),
+        FilledButton.icon(
+          onPressed: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const BookingView())),
+          icon: const Icon(Icons.calendar_month_rounded),
+          label: Text(strings.bookStay),
+          style: FilledButton.styleFrom(
+            backgroundColor: const Color(0xFFE8B45F),
+            foregroundColor: const Color(0xFF102B2F),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          ),
+        ),
+      ],
     );
   }
 }
