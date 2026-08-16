@@ -307,11 +307,12 @@ class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context)!;
+    final isNarrow = MediaQuery.sizeOf(context).width < 430;
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
       child: SizedBox(
         width: double.infinity,
-        height: 480,
+        height: isNarrow ? 560 : 480,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -586,13 +587,22 @@ class _RoomsGallery extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 700) {
-          return Column(
-            children: [
-              for (final room in rooms) ...[
-                _MobileStayCard(room: room),
-                if (room != rooms.last) const SizedBox(height: 12),
-              ],
-            ],
+          return SizedBox(
+            height: 300,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: rooms.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final room = rooms[index];
+                return _StayCard(
+                  title: room.title,
+                  subtitle: room.subtitle,
+                  price: room.price,
+                  imageUrl: room.imageUrl,
+                );
+              },
+            ),
           );
         }
 
@@ -613,96 +623,6 @@ class _RoomsGallery extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class _MobileStayCard extends StatelessWidget {
-  const _MobileStayCard({required this.room});
-
-  final _RoomData room;
-
-  @override
-  Widget build(BuildContext context) {
-    final strings = AppLocalizations.of(context)!;
-    return Material(
-      color: Colors.white.withValues(alpha: 0.12),
-      borderRadius: BorderRadius.circular(16),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () => Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (_) => const BookingView())),
-        child: SizedBox(
-          height: 132,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 126,
-                height: double.infinity,
-                child: Image.network(
-                  room.imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) =>
-                      const ColoredBox(color: Color(0xFF315556)),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        room.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        room.subtitle,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                          height: 1.3,
-                        ),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              room.price,
-                              style: const TextStyle(
-                                color: Color(0xFFFFD58A),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 20,
-                            semanticLabel: strings.bookStay,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

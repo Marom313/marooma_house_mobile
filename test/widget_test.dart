@@ -69,6 +69,23 @@ void main() {
     expect(find.text('Dark'), findsOneWidget);
   });
 
+  testWidgets('mobile room catalog uses a horizontal row', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpLocalized(tester, const HomeView());
+    await tester.ensureVisible(find.text('Rooms and suites'));
+    await tester.pumpAndSettle();
+
+    final horizontalLists = find.byWidgetPredicate(
+      (widget) =>
+          widget is ListView && widget.scrollDirection == Axis.horizontal,
+    );
+    expect(horizontalLists, findsWidgets);
+  });
+
   testWidgets('booking view shows localized suite selection and pricing', (
     tester,
   ) async {
