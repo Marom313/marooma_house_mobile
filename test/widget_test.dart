@@ -43,10 +43,6 @@ void main() {
     await tester.ensureVisible(find.text('Rooms and suites'));
     await tester.pumpAndSettle();
     expect(find.text('The Pearl Suite'), findsOneWidget);
-
-    await tester.drag(find.byType(ListView).at(1), const Offset(-900, 0));
-    await tester.pumpAndSettle();
-
     expect(find.text('The Lighthouse Suite'), findsOneWidget);
     expect(find.text('Garden Room'), findsOneWidget);
     expect(find.text('Family Room'), findsOneWidget);

@@ -34,6 +34,19 @@ class HomeView extends StatelessWidget {
                       const SizedBox(height: 26),
                       _HeroCard(),
                       const SizedBox(height: 24),
+                      _SectionTitle(title: strings.availableSuites),
+                      const SizedBox(height: 6),
+                      Text(
+                        strings.roomsIntro,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                          height: 1.45,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      _RoomsGallery(strings: strings),
+                      const SizedBox(height: 30),
                       _SectionTitle(title: strings.peopleLovingIt),
                       const SizedBox(height: 14),
                       SizedBox(
@@ -60,25 +73,6 @@ class HomeView extends StatelessWidget {
                                   'https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80',
                             ),
                           ],
-                        ),
-                      ),
-                      const SizedBox(height: 26),
-                      _SectionTitle(title: strings.availableSuites),
-                      const SizedBox(height: 6),
-                      Text(
-                        strings.roomsIntro,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                          height: 1.45,
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      SizedBox(
-                        height: 300,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: _roomCards(strings),
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -313,89 +307,123 @@ class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context)!;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        color: Colors.white.withValues(alpha: 0.12),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: const Color(0xFFE8B45F).withValues(alpha: 0.18),
-              borderRadius: BorderRadius.circular(999),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: SizedBox(
+        width: double.infinity,
+        height: 480,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/images/marooma-hero.jpg',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
             ),
-            child: Text(
-              strings.curatedLiving,
-              style: TextStyle(
-                color: Color(0xFFFFE5B3),
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            strings.heroTitle,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-              height: 1.1,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            strings.heroBody,
-            style: TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
-          ),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const BookingView())),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE8B45F),
-                  foregroundColor: const Color(0xFF1B2D2A),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.06),
+                    const Color(0xFF102B2F).withValues(alpha: 0.84),
+                  ],
+                  stops: const [0.2, 1],
                 ),
-                child: Text(strings.bookStay),
               ),
-              OutlinedButton(
-                onPressed: () => Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const InviteView())),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: const BorderSide(color: Colors.white54),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE8B45F).withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      strings.curatedLiving,
+                      style: TextStyle(
+                        color: Color(0xFFFFE5B3),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                  const SizedBox(height: 14),
+                  Text(
+                    strings.heroTitle,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.w800,
+                      height: 1.1,
+                    ),
                   ),
-                ),
-                child: Text(strings.inviteFriends),
+                  const SizedBox(height: 12),
+                  Text(
+                    strings.heroBody,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 15,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const BookingView(),
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFE8B45F),
+                          foregroundColor: const Color(0xFF1B2D2A),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: Text(strings.bookStay),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const InviteView()),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.white54),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: Text(strings.inviteFriends),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -495,43 +523,50 @@ class _ExperienceTile extends StatelessWidget {
   }
 }
 
-List<Widget> _roomCards(AppLocalizations strings) => [
-  _StayCard(
+typedef _RoomData = ({
+  String title,
+  String subtitle,
+  String price,
+  String imageUrl,
+});
+
+List<_RoomData> _roomData(AppLocalizations strings) => [
+  (
     title: strings.harborLoft,
     subtitle: strings.oceanSuiteGuests,
     price: strings.nightPrice('620'),
     imageUrl:
         'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
   ),
-  _StayCard(
+  (
     title: strings.courtyardCasa,
     subtitle: strings.gardenRetreatGuests,
     price: strings.nightPrice('840'),
     imageUrl:
         'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
   ),
-  _StayCard(
+  (
     title: strings.pearlSuite,
     subtitle: strings.pearlSuiteSubtitle,
     price: strings.nightPrice('710'),
     imageUrl:
         'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=85',
   ),
-  _StayCard(
+  (
     title: strings.lighthouseSuite,
     subtitle: strings.lighthouseSuiteSubtitle,
     price: strings.nightPrice('960'),
     imageUrl:
         'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85',
   ),
-  _StayCard(
+  (
     title: strings.gardenRoom,
     subtitle: strings.gardenRoomSubtitle,
     price: strings.nightPrice('390'),
     imageUrl:
         'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85',
   ),
-  _StayCard(
+  (
     title: strings.familyRoom,
     subtitle: strings.familyRoomSubtitle,
     price: strings.nightPrice('760'),
@@ -539,6 +574,138 @@ List<Widget> _roomCards(AppLocalizations strings) => [
         'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=85',
   ),
 ];
+
+class _RoomsGallery extends StatelessWidget {
+  const _RoomsGallery({required this.strings});
+
+  final AppLocalizations strings;
+
+  @override
+  Widget build(BuildContext context) {
+    final rooms = _roomData(strings);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 700) {
+          return Column(
+            children: [
+              for (final room in rooms) ...[
+                _MobileStayCard(room: room),
+                if (room != rooms.last) const SizedBox(height: 12),
+              ],
+            ],
+          );
+        }
+
+        return Wrap(
+          spacing: 14,
+          runSpacing: 14,
+          children: [
+            for (final room in rooms)
+              SizedBox(
+                height: 300,
+                child: _StayCard(
+                  title: room.title,
+                  subtitle: room.subtitle,
+                  price: room.price,
+                  imageUrl: room.imageUrl,
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _MobileStayCard extends StatelessWidget {
+  const _MobileStayCard({required this.room});
+
+  final _RoomData room;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!;
+    return Material(
+      color: Colors.white.withValues(alpha: 0.12),
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const BookingView())),
+        child: SizedBox(
+          height: 132,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 126,
+                height: double.infinity,
+                child: Image.network(
+                  room.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) =>
+                      const ColoredBox(color: Color(0xFF315556)),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        room.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        room.subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                          height: 1.3,
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              room.price,
+                              style: const TextStyle(
+                                color: Color(0xFFFFD58A),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            color: Colors.white.withValues(alpha: 0.9),
+                            size: 20,
+                            semanticLabel: strings.bookStay,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class _StayCard extends StatelessWidget {
   const _StayCard({
